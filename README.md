@@ -149,6 +149,10 @@ Authenticated users can trigger manual scraping by clicking the "Scrape Instagra
 - `GET /api/profiles/:username/history` - Get historical data for a profile
 - `POST /api/run-scraper` - Manually trigger the scraper (authenticated users only)
 
+### 🚫 Disclaimer
+
+This project **does not bypass Instagram’s security**. Scraping behavior may stop working at any time if Instagram updates its protections.  
+Users are fully responsible for **complying with Instagram’s Terms of Service**.
 ## License
 
 MIT
