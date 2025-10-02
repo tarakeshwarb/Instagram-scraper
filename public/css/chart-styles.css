@@ -1,0 +1,89 @@
+/* Instagram-inspired Color Palette */
+:root {
+  --chart-color-1: #8a3ab9;
+  --chart-color-2: #e95950;
+  --chart-color-3: #fccc63;
+  --chart-color-4: #cd486b;
+  --chart-color-5: #4c68d7;
+  --chart-color-6: #5851db;
+  --chart-color-7: #fbad50;
+  --chart-color-8: #bc2a8d;
+  --chart-color-9: #fd1d1d;
+  --chart-color-10: #f56040;
+}
+
+/* Chart Container Styling */
+.chart-container {
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.chart-container:hover {
+  background-color: rgba(0,0,0,0.01);
+}
+
+canvas {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Top profiles legend styles */
+.top-profiles-legend {
+  border-top: 1px solid var(--border-color);
+  padding-top: 15px;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.top-profiles-legend .badge {
+  font-size: 0.85rem;
+  padding: 8px 15px;
+  margin-bottom: 5px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.top-profiles-legend .badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 1st place styles */
+.badge.bg-warning.text-dark {
+  background: linear-gradient(45deg, #fccc63, #fbad50) !important;
+  color: #262626 !important;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+/* 2nd place styles */
+.badge.bg-secondary {
+  background: linear-gradient(45deg, #ced4da, #adb5bd) !important;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* 3rd place styles */
+.badge.bg-danger {
+  background: linear-gradient(45deg, #e95950, #cd486b) !important;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Profile Icon in Badge */
+.badge .profile-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.3);
+}

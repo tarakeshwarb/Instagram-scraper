@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+python-scraper/venv/
+python-scraper/__pycache__/
+
+# Environment variables
+.env
+python-scraper/.env
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Python
+*.py[cod]
+*$py.class
+__pycache__/
+*.so
+.Python
+
+# Instaloader session files
+python-scraper/sessions/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db

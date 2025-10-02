@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Analytics Dashboard</title>
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/enhanced-styles.css">
+  <link rel="stylesheet" href="/css/chart-styles.css">
+  <link rel="stylesheet" href="/css/podium.css">
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+  <div class="container-fluid p-0">
+    <header class="py-3 mb-4 border-bottom animate__animated animate__fadeIn">
+      <div class="container d-flex align-items-center justify-content-between">
+        <h1 class="d-flex align-items-center mb-0 text-decoration-none">
+          <i class="bi bi-instagram me-2"></i>
+          <span>Instagram Analytics</span>
+          <span class="badge bg-primary ms-2 rounded-pill">LIVE</span>
+        </h1>
+        <div class="d-flex align-items-center">
+          <div class="next-update me-3 d-none d-md-block">
+            <small class="text-secondary">
+              <i class="bi bi-clock"></i> 
+              Next update: <span id="nextUpdateTime">12:00 AM</span>
+              <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The dashboard automatically updates daily at midnight"></i>
+            </small>
+          </div>
+          
+          <button id="scrapeBtn" class="btn btn-outline-success me-2">
+            <i class="bi bi-cloud-download"></i> Update Now
+          </button>
+          <div class="auth-buttons">
+            <button id="loginBtn" class="btn btn-primary me-2">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </button>
+            <button id="registerBtn" class="btn btn-outline-secondary me-2">
+              <i class="bi bi-person-plus"></i> Register
+            </button>
+          </div>
+          <div class="user-menu dropdown d-none">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>
+              <span id="usernameDisplay">User</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuButton">
+              <li><a class="dropdown-item" href="/profile.html"><i class="bi bi-person"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="#settings"><i class="bi bi-gear"></i> Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Overview Cards -->
+    <div class="container mb-4 animate__animated animate__fadeInUp">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card stats-card mb-3">
+            <div class="stat-value" id="totalProfilesCount">0</div>
+            <div class="stat-label">Tracked Profiles</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card mb-3">
+            <div class="stat-value" id="totalFollowersCount">0</div>
+            <div class="stat-label">Total Followers</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card mb-3">
+            <div class="stat-value" id="avgEngagement">0%</div>
+            <div class="stat-label">Avg. Engagement</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stats-card mb-3">
+            <div class="stat-value" id="lastUpdateTime">--:--</div>
+            <div class="stat-label">Last Updated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="container">
+      <div class="row mb-4">
+        <div class="col-md-10 offset-md-1">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Profile Analytics</h5>
+              <div class="input-group" style="max-width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search profiles...">
+                <button id="searchBtn" class="btn btn-outline-primary" type="button">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="date-filter">
+                <div class="row">
+                  <div class="col">
+                <label for="startDate" class="form-label">From Date:</label>
+                <input type="date" id="startDate" class="form-control form-control-sm">
+              </div>
+              <div class="col">
+                <label for="endDate" class="form-label">To Date:</label>
+                <input type="date" id="endDate" class="form-control form-control-sm">
+              </div>
+              <div class="col-auto d-flex align-items-end">
+                <button id="applyDateFilter" class="btn btn-sm btn-primary">
+                  Apply Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select id="sortSelect" class="form-select mb-2">
+            <option value="followers" selected>Sort by Followers</option>
+            <option value="following">Sort by Following</option>
+            <option value="posts_count">Sort by Posts</option>
+          </select>
+          <button id="resetFilters" class="btn btn-outline-secondary btn-sm w-100">Reset Filters</button>
+        </div>
+      </div>
+
+      <div class="card mb-4 profiles-card animate__animated animate__fadeIn">
+        <div class="card-header instagram-gradient text-white d-flex align-items-center">
+          <i class="bi bi-people-fill me-2"></i>
+          <h5 class="mb-0">Instagram Profiles</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Followers</th>
+                  <th scope="col">Following</th>
+                  <th scope="col">Posts</th>
+                  <th scope="col">Last Updated</th>
+                </tr>
+              </thead>
+              <tbody id="profilesTable">
+                <!-- Profiles will be loaded here -->
+                <tr>
+                  <td colspan="6" class="text-center py-4">
+                    <div class="loading-shimmer">
+                      <div class="spinner-grow spinner-grow-sm text-primary me-2" role="status"></div>
+                      <span class="text-muted">Loading Instagram profiles...</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 3 Profiles Podium -->
+      <div class="card mb-4 shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="mb-0">
+              <i class="bi bi-trophy me-2"></i>
+              Top 3 Instagram Profiles
+            </h5>
+            <small class="text-muted">Ranked by followers count</small>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="podiumOptions" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-sliders"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="podiumOptions">
+              <li><button class="dropdown-item" id="rankByFollowers">Rank by Followers</button></li>
+              <li><button class="dropdown-item" id="rankByEngagement">Rank by Engagement</button></li>
+              <li><button class="dropdown-item" id="rankByPosts">Rank by Posts</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="profilePodium" class="podium-container">
+            <!-- Podium will be generated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4 animate__animated animate__fadeInLeft">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-people me-2"></i>
+                Follower Distribution
+              </h5>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="followerChartOptions" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-gear"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="followerChartOptions">
+                  <li><button class="dropdown-item" id="sortFollowers">Sort by Count</button></li>
+                  <li><button class="dropdown-item" id="toggleFollowerLabels">Toggle Labels</button></li>
+                  <li><button class="dropdown-item" id="downloadFollowerChart">Download Chart</button></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="position: relative; height:300px">
+                <canvas id="followersChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4 animate__animated animate__fadeInRight">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-grid-3x3 me-2"></i>
+                Top Profiles by Posts
+              </h5>
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="postsChartOptions" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-gear"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="postsChartOptions">
+                  <li><button class="dropdown-item" id="sortPosts">Sort by Count</button></li>
+                  <li><button class="dropdown-item" id="togglePostLabels">Toggle Labels</button></li>
+                  <li><button class="dropdown-item" id="downloadPostsChart">Download Chart</button></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="position: relative; height:300px">
+                <canvas id="postsChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 mb-4 animate__animated animate__fadeInUp">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">
+                <i class="bi bi-graph-up me-2"></i>
+                Engagement Over Time
+              </h5>
+              <select class="form-select form-select-sm" style="width: auto" id="timeRangeSelect">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="all">All time</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="position: relative; height:250px">
+                <canvas id="engagementChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+            <span>Instagram Dashboard &copy; 2025</span>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <a href="#" class="text-decoration-none me-3">Privacy Policy</a>
+            <a href="#" class="text-decoration-none me-3">Terms of Service</a>
+            <a href="#" class="text-decoration-none">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/ui-enhancements.js"></script>
+  
+  <script>
+    // Initialize tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+      
+      // Display next update time
+      const nextUpdateEl = document.getElementById('nextUpdateTime');
+      if (nextUpdateEl) {
+        // Set to midnight tonight
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        nextUpdateEl.textContent = new Intl.DateTimeFormat('en-US', {
+          hour: 'numeric',
+          minute: 'numeric'
+        }).format(midnight);
+      }
+      
+      // Populate summary cards with data
+      fetchSummaryData();
+    });
+    
+    // Function to fetch summary data for the overview cards
+    function fetchSummaryData() {
+      fetch('/api/profiles/summary')
+        .then(response => {
+          if (!response.ok) {
+            return { totalProfiles: 0, totalFollowers: 0, avgEngagement: 0, lastUpdated: new Date() };
+          }
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById('totalProfilesCount').textContent = data.totalProfiles || 0;
+          document.getElementById('totalFollowersCount').textContent = formatNumber(data.totalFollowers || 0);
+          document.getElementById('avgEngagement').textContent = `${(data.avgEngagement || 0).toFixed(2)}%`;
+          document.getElementById('lastUpdateTime').textContent = formatTime(data.lastUpdated);
+        })
+        .catch(error => {
+          console.error('Error fetching summary data:', error);
+        });
+    }
+    
+    // Helper function to format large numbers
+    function formatNumber(num) {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+      }
+      if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+      }
+      return num;
+    }
+    
+    // Helper function to format time
+    function formatTime(dateString) {
+      if (!dateString) return '--:--';
+      const date = new Date(dateString);
+      return new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      }).format(date);
+    }
+  </script>
+</body>
+</html>

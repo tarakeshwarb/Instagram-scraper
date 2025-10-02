@@ -1,0 +1,24 @@
+# Instagram scraper dependencies
+instaloader==4.10.1
+
+# Database connection
+psycopg2==2.9.9
+psycopg2-binary==2.9.9
+
+# Utilities
+python-dotenv==1.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+pandas==2.1.1
+numpy==1.26.0
+
+# Scheduling and time handling
+schedule==1.2.1
+pytz==2023.3.post1
+
+# Progress and UI
+tqdm==4.66.1
+colorama==0.4.6
+
+# Error handling and retrying
+tenacity==8.2.3

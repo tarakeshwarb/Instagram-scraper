@@ -1,0 +1,417 @@
+/* Modern Instagram-inspired color scheme */
+:root {
+  /* Primary Colors */
+  --instagram-blue: #0095f6;
+  --instagram-blue-hover: #1877f2;
+  --instagram-gradient-start: #8a3ab9;
+  --instagram-gradient-mid: #e95950;
+  --instagram-gradient-end: #fccc63;
+  
+  /* Light mode variables */
+  --bg-color: #fafafa;
+  --card-bg: #ffffff;
+  --text-primary: #262626;
+  --text-secondary: #8e8e8e;
+  --border-color: #dbdbdb;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --header-bg: #ffffff;
+  --footer-bg: #ffffff;
+  --input-bg: #efefef;
+  --chart-grid: rgba(0, 0, 0, 0.05);
+  
+  /* Accent Colors */
+  --accent-green: #00bf63;
+  --accent-red: #ed4956;
+  --accent-yellow: #fccc63;
+  
+  /* Animation Speed */
+  --transition-speed: 0.3s;
+}
+
+/* Global Styles */
+body {
+  padding-bottom: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Header Styles */
+.header, header {
+  background-color: var(--header-bg);
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+h1 i.bi-instagram {
+  background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-mid), var(--instagram-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 1.8rem;
+}
+
+/* Card Styling */
+.card {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: var(--instagram-blue);
+  border-color: var(--instagram-blue);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--instagram-blue-hover);
+  border-color: var(--instagram-blue-hover);
+}
+
+.btn-outline-success {
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--accent-green);
+  color: white;
+}
+
+/* Custom Icons */
+.bi {
+  margin-right: 0.25rem;
+  vertical-align: -0.125em;
+}
+
+/* Search Input */
+.input-group .form-control {
+  background-color: var(--input-bg);
+  border: none;
+  padding: 0.625rem 1rem;
+}
+
+.input-group .btn {
+  padding: 0.625rem 1rem;
+}
+
+/* Stats Cards */
+.stats-card {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.stats-card .stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stats-card .stat-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Profile Cards */
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.profile-card .profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  background: linear-gradient(white, white) padding-box, 
+    linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end)) border-box;
+}
+
+.profile-card .profile-info {
+  margin-left: 1rem;
+}
+
+.profile-card .username {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.profile-card .profile-stats {
+  display: flex;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.profile-card .profile-stats span {
+  margin-right: 1rem;
+}
+
+/* Chart Containers */
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 320px;
+  width: 100%;
+}
+
+/* Loading Animation */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--instagram-blue);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tooltip Styling */
+.tooltip-inner {
+  background-color: var(--text-primary);
+  color: white;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  max-width: 200px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+/* Table Styling */
+.table {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom-width: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  padding: 15px;
+  background-color: var(--input-bg);
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.table thead th:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-end));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.table thead th:hover:after {
+  transform: scaleX(1);
+}
+
+.table tbody tr {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(245, 245, 245, 0.7) !important;
+  cursor: pointer;
+}
+
+.table tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Username column styling */
+.table td:nth-child(2) {
+  font-weight: 600;
+  color: var(--instagram-blue);
+}
+
+/* Followers, Following, Posts count styling */
+.table td:nth-child(3),
+.table td:nth-child(4),
+.table td:nth-child(5) {
+  font-weight: 500;
+}
+
+/* Last updated column styling */
+.table td:nth-child(6) {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .stats-card .stat-value {
+    font-size: 2rem;
+  }
+}
+
+/* Animation for elements */
+.fade-in {
+  animation: fadeIn var(--transition-speed) ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Instagram gradient header */
+.instagram-gradient {
+  background: linear-gradient(45deg, var(--instagram-gradient-start), var(--instagram-gradient-mid), var(--instagram-gradient-end));
+  color: white;
+  border-bottom: none;
+}
+
+/* Profiles card specific styling */
+.profiles-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.profiles-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Table row highlight effect */
+.highlight-new {
+  animation: highlightNew 2s ease-in-out;
+}
+
+@keyframes highlightNew {
+  0% { background-color: rgba(0, 149, 246, 0.1); }
+  100% { background-color: transparent; }
+}
+
+/* Loading shimmer effect */
+.loading-shimmer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loading-shimmer .spinner-grow {
+  color: var(--instagram-blue);
+}
+
+/* Shimmer animation for empty rows */
+.shimmer-row td {
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-row td::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0) 100%);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
